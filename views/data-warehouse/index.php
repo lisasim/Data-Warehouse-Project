@@ -16,7 +16,7 @@ $urlVendor ='index.php?r=data-vendor/create';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Input Data', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Tambah Data Barang', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Tambah Vendor', $urlVendor, ['class' => 'btn btn-success']) ?>
     </p>
 

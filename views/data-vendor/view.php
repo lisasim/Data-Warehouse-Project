@@ -7,9 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model app\models\DataVendor */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Data Vendors', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => 'Data Vendors', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$urlListVendor ='index.php?r=data-vendor/index';
 ?>
 <div class="data-vendor-view">
 
@@ -24,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('List Data Vendor', $urlListVendor, ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DetailView::widget([

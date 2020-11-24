@@ -89,9 +89,7 @@ $pembelianBy = [
 
     <?= $form->field($model, 'koordinat')->textInput() ?>
 
-    <?= $form->field($model, 'konverter')->textInput() ?>
-
-    <?= $form->field($model, 'jumlah_per_pcs')->textInput() ?>
+    <?= $form->field($model, 'konverter')->textInput()->hint('Isi dengan jumlah satuan pembelian dalam satuan pengeluaran') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

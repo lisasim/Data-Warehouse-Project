@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form">
         <label for="ambil"><?php echo "(satuan : " . $model->satuan_pengeluaran.")"; ?></label><br>
-        Username : <input type="text" min='0' name='username'/>
+        Nama user : <input type="text" min='0' name='username'/>
         <span class="error">* <?php echo $usernameErr;?></span>
         <br>
         Jumlah : <input type="number" min='0' name='ambil'/>

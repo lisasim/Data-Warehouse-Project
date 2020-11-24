@@ -35,7 +35,7 @@ class DataWarehouse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['kode_barang','nama_item', 'satuan_pengeluaran', 'satuan_pembelian', 'pembelian_by', 'vendor', 'jumlah_per_pcs'], 'required'],
+            [['kode_barang','nama_item', 'satuan_pengeluaran', 'satuan_pembelian', 'harga', 'pembelian_by', 'vendor', 'konverter'], 'required'],
             [['kode_barang', 'nama_item', 'satuan_pengeluaran', 'satuan_pembelian', 'pembelian_by', 'vendor', 'koordinat', 'jumlah_per_pcs'], 'string'],
             [['harga'], 'number'],
             [['stok', 'konverter'], 'default', 'value' => null],

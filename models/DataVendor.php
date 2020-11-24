@@ -26,9 +26,9 @@ class DataVendor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id'], 'default', 'value' => null],
-            [['id'], 'integer'],
+            //[['id'], 'required'],
+            //[['id'], 'default', 'value' => null],
+            //[['id'], 'integer'],
             [['nama_vendor'], 'string'],
         ];
     }
