@@ -6,6 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DataVendorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+\yii\web\YiiAsset::register($this);
 
 $this->title = 'Data Vendors';
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'nama_vendor',
+            ['class' => 'yii\grid\ActionColumn',],
         ],
     ]); ?>
 
