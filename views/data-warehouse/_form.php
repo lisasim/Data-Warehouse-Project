@@ -10,6 +10,7 @@ use app\models\DataWarehouse;
 /* @var $model app\models\DataWarehouse */
 /* @var $form yii\widgets\ActiveForm */
 
+/*
 $satuanPengeluaran = [
     1 => 'buku', 
     2 => 'box',
@@ -32,6 +33,7 @@ $satuanPengeluaran = [
     19 => 'pcs',
     20 => 'ball'
 ];
+
 
 $satuanPembelian = [
     1 => 'dus', 
@@ -65,6 +67,7 @@ $pembelianBy = [
     5 => 'Minta ke GA HO',
     6 => '-'
 ];
+*/
 
 
 ?>
@@ -77,13 +80,13 @@ $pembelianBy = [
 
     <?= $form->field($model, 'nama_item')->textInput() ?>
 
-    <?= $form->field($model, 'satuan_pengeluaran')->dropDownList($satuanPengeluaran,['prompt'=>'Select..']);?>
+    <?= $form->field($model, 'satuan_pengeluaran')->dropDownList(ArrayHelper::map(DataWarehouse::find()->all(),'satuan_pengeluaran','satuan_pengeluaran'),['prompt'=>'Select..']);?>
 
-    <?= $form->field($model, 'satuan_pembelian')->dropDownList($satuanPembelian,['prompt'=>'Select..']);?>
+    <?= $form->field($model, 'satuan_pembelian')->dropDownList(ArrayHelper::map(DataWarehouse::find()->all(),'satuan_pembelian','satuan_pembelian'),['prompt'=>'Select..']);?>
 
     <?= $form->field($model, 'harga')->textInput() ?>
 
-    <?= $form->field($model, 'pembelian_by')->dropDownList($pembelianBy,['prompt'=>'Select..']);?>
+    <?= $form->field($model, 'pembelian_by')->dropDownList(ArrayHelper::map(DataWarehouse::find()->all(),'pembelian_by','pembelian_by'),['prompt'=>'Select..']);?>
 
     <?= $form->field($model, 'vendor')->dropDownList(ArrayHelper::map(DataVendor::find()->all(),'id','nama_vendor'),['prompt'=>'Select Vendor']);?>
 

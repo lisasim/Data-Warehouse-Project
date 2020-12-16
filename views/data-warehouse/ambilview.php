@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'stok',
             'koordinat',
             'konverter',
-            'jumlah_per_pcs',
+            //'jumlah_per_pcs',
         ],
     ]) ?>
 
@@ -57,13 +57,41 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
         $nilai = 0;
-        $username = $usernameErr = $nilaiErr = "";
+        $username = $userGA = $departemen = $usernameErr = $userGAErr = $nilaiErr = $departemenErr = "";
 
-        if (isset($_POST["ambil"])||isset($_POST["username"])){
+        if (isset($_POST["userGA"])||isset($_POST["ambil"])||isset($_POST["username"])||isset($_POST["departemen"])){
 
+            if ($_POST['userGA']==NULL){
+                $userGAErr = "Nama user GA tidak boleh kosong";
+            }
+
+            if ($_POST['username']==NULL){
+                $usernameErr = "Nama user tidak boleh kosong";
+            }
+
+            if ($_POST['departemen']==NULL){
+                $departemenErr = "Departemen tidak boleh kosong";
+            }
+
+            if ($_POST['ambil']==NULL){
+                $nilaiErr = "Nilai tidak boleh kosong";
+            }
+
+            if ($_POST['userGA']!=NULL && $_POST['ambil']!=NULL && $_POST['username']!=NULL && $_POST['departemen']!=NULL){
+                $userGA = $_POST['userGA'];
+                $nilai = $model->stok - $_POST['ambil'];
+                $username = $_POST['username'];
+                $departemen = $_POST['departemen'];
+                Yii::$app->db->createCommand("UPDATE warehouse.data_warehouse SET stok=".$nilai." WHERE kode_barang = '".$model->kode_barang."' ")->execute();
+                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','".$username."',current_timestamp, ".$_POST['ambil'].", 'ambil', '".$departemen."', '".$userGA."') ")->execute();
+                header("Refresh:0");
+            } 
+
+/*
             if ($_POST['ambil']==NULL && $_POST['username']!=NULL){
                 $nilaiErr = "Nilai tidak boleh kosong";
             }
+
             else if ($_POST['ambil']!=NULL && $_POST['username']==NULL){
                 $usernameErr = "Username tidak boleh kosong";
             }
@@ -78,6 +106,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas) VALUES ('".$model->kode_barang."','".$username."',current_timestamp, ".$_POST['ambil'].", 'ambil') ")->execute();
                 header("Refresh:0");
             }
+
+            */
         }
     ?>
 
@@ -88,8 +118,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="form">
         <label for="ambil"><?php echo "(satuan : " . $model->satuan_pengeluaran.")"; ?></label><br>
-        Nama user : <input type="text" min='0' name='username'/>
+        Nama user GA : <input type="text" name='userGA'/>
+        <span class="error">* <?php echo $userGAErr;?></span>
+        <br>
+        Nama user : <input type="text" name='username'/>
         <span class="error">* <?php echo $usernameErr;?></span>
+        <br>
+        Departemen : <input type="text" name='departemen'/>
+        <span class="error">* <?php echo $departemenErr;?></span>
         <br>
         Jumlah : <input type="number" min='0' name='ambil'/>
         <span class="error">* <?php echo $nilaiErr;?></span>

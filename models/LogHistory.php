@@ -32,8 +32,8 @@ class LogHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['kode_barang', 'username', 'waktu', 'id'], 'required'],
-            [['kode_barang', 'username', 'aktivitas'], 'string'],
+            [['kode_barang', 'username', 'waktu', 'id', 'user_ga'], 'required'],
+            [['kode_barang', 'username', 'aktivitas', 'user_ga', 'departemen'], 'string'],
             [['waktu'], 'safe'],
             [['jumlah', 'id'], 'default', 'value' => null],
             [['jumlah', 'id'], 'integer'],
@@ -54,6 +54,8 @@ class LogHistory extends \yii\db\ActiveRecord
             'jumlah' => 'Jumlah',
             'id' => 'ID',
             'aktivitas' => 'Aktivitas',
+            'departemen' => 'Departemen',
+            'user_ga' => 'Nama User GA',
         ];
     }
 

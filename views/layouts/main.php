@@ -47,6 +47,9 @@ AppAsset::register($this);
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
+                //['label' => 'Data Warehouse', 'url' => ['/data-warehouse/index']],
+                //['label' => 'Log History', 'url' => ['/log-history/index']],
+                //['label' => 'Data Vendor', 'url' => ['/data-vendor/index']],
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
