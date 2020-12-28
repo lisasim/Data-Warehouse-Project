@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Update Data Barang ATK, APP dan APD ' . $model->kode_barang;
 $this->params['breadcrumbs'][] = ['label' => 'Data Warehouses', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->kode_barang, 'url' => ['view', 'id' => $model->kode_barang]];
+//$this->params['breadcrumbs'][] = ['label' => $model->kode_barang, 'url' => ['view', 'id' => $model->kode_barang]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="data-warehouse-update">

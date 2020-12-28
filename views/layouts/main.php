@@ -38,7 +38,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
+            //['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Data Warehouse', 'url' => ['/data-warehouse/index']],
             ['label' => 'Log History', 'url' => ['/log-history/index']],
             ['label' => 'Data Vendor', 'url' => ['/data-vendor/index']],
@@ -49,7 +49,7 @@ AppAsset::register($this);
             ) : (
                 //['label' => 'Data Warehouse', 'url' => ['/data-warehouse/index']],
                 //['label' => 'Log History', 'url' => ['/log-history/index']],
-                //['label' => 'Data Vendor', 'url' => ['/data-vendor/index']],
+                //['label' => 'Data Vendor', 'url' => ['/data-vendor/index']]
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(

@@ -20,8 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Kembali', ['index', 'id' => $model->kode_barang], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Update', ['update', 'id' => $model->kode_barang], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->kode_barang], [
+        <?= Html::a('Delete Data Barang', ['delete', 'id' => $model->kode_barang], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -57,29 +56,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
         $nilai = 0;
-        $username = $userGA = $usernameErr = $nilaiErr = $userGAErr = "";
+        $username = $usernameErr = "";
+        $userGA = $nilaiErr = $userGAErr = "";
 
         if (isset($_POST["userGA"])||isset($_POST["tambah"])||isset($_POST["username"])){
 
             if ($_POST['userGA']==NULL){
                 $userGAErr = "Nama user GA tidak boleh kosong";
             }
+            /*
 
             if ($_POST['username']==NULL){
                 $usernameErr = "Nama user tidak boleh kosong";
             }
+            */
 
             if ($_POST['tambah']==NULL){
                 $nilaiErr = "Nilai tidak boleh kosong";
             }
 
-            if ($_POST['userGA']!=NULL && $_POST['tambah']!=NULL && $_POST['username']!=NULL){
+            if ($_POST['userGA']!=NULL && $_POST['tambah']!=NULL){
                 $userGA = $_POST['userGA'];
                 $nilai = ($_POST['tambah'] * $model->konverter) + $model->stok;
-                $username = $_POST['username'];
+                //$username = $_POST['username'];
                 Yii::$app->db->createCommand("UPDATE warehouse.data_warehouse SET stok=".$nilai." WHERE kode_barang = '".$model->kode_barang."' ")->execute();
-                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','".$username."',current_timestamp, ".$_POST['tambah'].", 'input', '-', '".$userGA."') ")->execute();
-                header("Refresh:0");
+                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','-',current_timestamp, ".$_POST['tambah'].", 'input', '-', '".$userGA."') ")->execute();
+                //header("Refresh:0");
+                Yii::$app->session->setFlash('success', 'Input Barang Berhasil');
+                //header("Refresh:0");
+                //common\widgets\Alert::widget();
+
             }
 
             /*
@@ -112,16 +118,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <h4><b>Input Barang</b></h4>
 
     <div class="form">
-        <label for="tambah"><?php echo "(satuan : " . $model->satuan_pembelian.")"; ?></label><br>
-        Nama User GA : <input type="text" min='0' name='userGA'/>
+        <label for="userGA">Nama User GA :</label> 
+        <br>
+        <input type="text" min='0' name='userGA'/>
         <span class="error">* <?php echo $userGAErr;?></span>
         <br>
-        Nama User : <input type="text" min='0' name='username'/>
-        <span class="error">* <?php echo $usernameErr;?></span>
+        <label for="tambah">Jumlah :</label> 
         <br>
-        Jumlah : <input type="number" min='0' name='tambah'/>
-        <span class="error">* <?php echo $nilaiErr;?></span>
-        <br>
+        <input type="number" min='0' name='tambah'/>
+        <span class="error">* <?php echo $nilaiErr ;?><?php echo "(satuan : " . $model->satuan_pembelian.")"; ?></span>
+        <br><br>
         <input type="submit" value='Submit' formmethod='post'>        
     </div>
 

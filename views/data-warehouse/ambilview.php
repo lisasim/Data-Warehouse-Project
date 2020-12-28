@@ -20,8 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Kembali', ['index', 'id' => $model->kode_barang], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Update', ['update', 'id' => $model->kode_barang], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->kode_barang], [
+        <?= Html::a('Delete Data Barang', ['delete', 'id' => $model->kode_barang], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -57,7 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
         $nilai = 0;
-        $username = $userGA = $departemen = $usernameErr = $userGAErr = $nilaiErr = $departemenErr = "";
+        $username = $usernameErr = "";
+        $userGA = $departemen = $userGAErr = $nilaiErr = $departemenErr = "";
 
         if (isset($_POST["userGA"])||isset($_POST["ambil"])||isset($_POST["username"])||isset($_POST["departemen"])){
 
@@ -65,26 +65,30 @@ $this->params['breadcrumbs'][] = $this->title;
                 $userGAErr = "Nama user GA tidak boleh kosong";
             }
 
+            /*
+
             if ($_POST['username']==NULL){
                 $usernameErr = "Nama user tidak boleh kosong";
             }
+            */
 
             if ($_POST['departemen']==NULL){
                 $departemenErr = "Departemen tidak boleh kosong";
             }
 
             if ($_POST['ambil']==NULL){
-                $nilaiErr = "Nilai tidak boleh kosong";
+                $nilaiErr = "Nilai tidak boleh kosong ";
             }
 
-            if ($_POST['userGA']!=NULL && $_POST['ambil']!=NULL && $_POST['username']!=NULL && $_POST['departemen']!=NULL){
+            if ($_POST['userGA']!=NULL && $_POST['ambil']!=NULL && $_POST['departemen']!=NULL){
                 $userGA = $_POST['userGA'];
                 $nilai = $model->stok - $_POST['ambil'];
-                $username = $_POST['username'];
+                //$username = $_POST['username'];
                 $departemen = $_POST['departemen'];
                 Yii::$app->db->createCommand("UPDATE warehouse.data_warehouse SET stok=".$nilai." WHERE kode_barang = '".$model->kode_barang."' ")->execute();
-                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','".$username."',current_timestamp, ".$_POST['ambil'].", 'ambil', '".$departemen."', '".$userGA."') ")->execute();
-                header("Refresh:0");
+                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','-',current_timestamp, ".$_POST['ambil'].", 'ambil', '".$departemen."', '".$userGA."') ")->execute();
+                //header("Refresh:0");
+                Yii::$app->session->setFlash('success', 'Ambil Barang Berhasil');
             } 
 
 /*
@@ -117,19 +121,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <h4><b>Ambil Barang</b></h4>
 
     <div class="form">
-        <label for="ambil"><?php echo "(satuan : " . $model->satuan_pengeluaran.")"; ?></label><br>
-        Nama user GA : <input type="text" name='userGA'/>
+        <label for="userGA">Nama User GA :</label> 
+        <br>
+        <input type="text" name='userGA'/>
         <span class="error">* <?php echo $userGAErr;?></span>
         <br>
-        Nama user : <input type="text" name='username'/>
-        <span class="error">* <?php echo $usernameErr;?></span>
+        <label for="departemen">Departemen :</label> 
         <br>
-        Departemen : <input type="text" name='departemen'/>
+        <input type="text" name='departemen'/>
         <span class="error">* <?php echo $departemenErr;?></span>
         <br>
-        Jumlah : <input type="number" min='0' name='ambil'/>
-        <span class="error">* <?php echo $nilaiErr;?></span>
+        <label for="userGA">Jumlah :</label> 
         <br>
+        <input type="number" min='0' name='ambil'/>
+        <span class="error">* <?php echo $nilaiErr;?><?php echo "(satuan : " . $model->satuan_pengeluaran.")"; ?></span>
+        <br><br>
         <input type="submit" value='Submit' formmethod='post'>        
     </div>
 

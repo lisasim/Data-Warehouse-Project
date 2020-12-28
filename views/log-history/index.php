@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'kode_barang',
             'user_ga',
-            'username',
+            //'username',
             'departemen',
             'waktu',
             'jumlah',

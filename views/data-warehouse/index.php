@@ -44,7 +44,7 @@ $urlVendor ='index.php?r=data-vendor/create';
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Actions',
                 'headerOptions' => ['style' => 'color:#337ab7'],
-                'template' => '{input}{ambil}',
+                'template' => '{input}{ambil}{update}',
                 'contentOptions' => ['class' => 'text-center'],
                 'buttons' => [
                     'input' => function ($url, $model) {
@@ -53,17 +53,16 @@ $urlVendor ='index.php?r=data-vendor/create';
                     },
 
                     'ambil' => function ($url, $model) {
-                        return Html::a('Ambil Barang', $url, ['class' => 'btn btn-success','style'=>'width:150px;']);
+                        return Html::a('Ambil Barang', $url, ['class' => 'btn btn-success','style'=>'width:150px;margin-bottom:5px']);
                         //return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['title' => Yii::t('app', 'view'),]);
                     },
 
-                    /*
 
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                            'title' => Yii::t('app', 'update'),
-                        ]);
+                        return Html::a('Update Data Barang', $url, ['class' => 'btn btn-primary','style'=>'width:150px;']);
                     },
+
+                    /*
 
                     'delete' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
@@ -81,6 +80,11 @@ $urlVendor ='index.php?r=data-vendor/create';
 
                     if ($action === 'ambil') {
                         $url ='index.php?r=data-warehouse/ambilview&id='.$model->kode_barang;
+                        return $url;
+                    }
+
+                    if ($action === 'update') {
+                        $url = 'index.php?r=data-warehouse/update&id='.$model->kode_barang;
                         return $url;
                     }
 
