@@ -1,4 +1,5 @@
 <?php
+//HALAMAN VIEW INPUT BARANG
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -83,32 +84,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','-',current_timestamp, ".$_POST['tambah'].", 'input', '-', '".$userGA."') ")->execute();
                 //header("Refresh:0");
                 Yii::$app->session->setFlash('success', 'Input Barang Berhasil');
+                Yii::$app->response->redirect(['data-warehouse/view', 'id'=>$model->kode_barang]);
                 //header("Refresh:0");
                 //common\widgets\Alert::widget();
 
             }
 
-            /*
-
-            if ($_POST['tambah']==NULL && $_POST['username']!=NULL){
-                $nilaiErr = "Nilai tidak boleh kosong";
-            }
-            else if ($_POST['tambah']!=NULL && $_POST['username']==NULL){
-                $usernameErr = "Username tidak boleh kosong";
-            }
-            else if ($_POST['tambah']==NULL && $_POST['username']==NULL){
-                $nilaiErr = "Nilai tidak boleh kosong";
-                $usernameErr = "Username tidak boleh kosong";
-            }
-
-            else if ($_POST['tambah']!=NULL && $_POST['username']!=NULL){
-                $nilai = ($_POST['tambah'] * $model->konverter) + $model->stok;
-                $username = $_POST['username'];
-                Yii::$app->db->createCommand("UPDATE warehouse.data_warehouse SET stok=".$nilai." WHERE kode_barang = '".$model->kode_barang."' ")->execute();
-                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen) VALUES ('".$model->kode_barang."','".$username."',current_timestamp, ".$_POST['tambah'].", 'input', '-') ")->execute();
-                header("Refresh:0");
-            }
-            */
         }
     ?>
 
