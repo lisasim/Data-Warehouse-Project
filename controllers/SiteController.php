@@ -61,8 +61,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        //return $this->render('index');
-        return $this->redirect(["site/login"]);
+        return $this->redirect(["data-warehouse/index"]);
+        // return $this->render('index');
+        // return $this->redirect(["site/login"]);
     }
 
     /**
@@ -73,14 +74,14 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            //return $this->goHome();
-            return $this->redirect(["site/login"]);
+            return $this->goHome();
+            // return $this->redirect(["site/login"]);
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            //return $this->goBack();
-            return $this->redirect(["data-warehouse/index"]);
+            return $this->goBack();
+            // return $this->redirect(["data-warehouse/index"]);
         }
 
         $model->password = '';

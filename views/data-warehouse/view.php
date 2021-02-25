@@ -1,9 +1,13 @@
 <?php
 //HALAMAN VIEW INPUT BARANG
 
+use app\models\DataWarehouse;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use kartik\dialog\Dialog;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DataWarehouse */
@@ -46,72 +50,30 @@ $this->params['breadcrumbs'][] = $this->title;
             //'jumlah_per_pcs',
         ],
     ]) ?> 
+ 
+</div>
 
-    <html>
-    <head>
-    <style>
-        .error {color: #FF0000;}
-    </style>
-    </head>
-    <body>  
+<div class="data-warehouse-form">
 
-    <?php
-        $nilai = 0;
-        $username = $usernameErr = "";
-        $userGA = $nilaiErr = $userGAErr = "";
+<?php $form = ActiveForm::begin(); ?>
 
-        if (isset($_POST["userGA"])||isset($_POST["tambah"])||isset($_POST["username"])){
+<?= $form->field($model_log, 'user_ga')->textInput() ?>
+<?= $form->field($model_log, 'jumlah')->textInput()->label("Jumlah yang akan dimasukkan ke stok")->hint('Isi dengan jumlah dalam satuan pembelian') ?>
+<?php 
+    echo $form->field($model_log, 'satuan')->widget(Select2::classname(), [
+        'data' => array_merge(['pcs'=>'pcs'],ArrayHelper::map(DataWarehouse::find()->where("kode_barang = '".$model->kode_barang."' and satuan_pembelian not ilike '%pcs%' ")->all()
+        ,'satuan_pembelian','satuan_pembelian')),
+        'options' => ['placeholder' => 'Pilih Satuan'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+?>
 
-            if ($_POST['userGA']==NULL){
-                $userGAErr = "Nama user GA tidak boleh kosong";
-            }
-            /*
+<div class="form-group">
+    <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+</div>
 
-            if ($_POST['username']==NULL){
-                $usernameErr = "Nama user tidak boleh kosong";
-            }
-            */
+<?php ActiveForm::end(); ?>
 
-            if ($_POST['tambah']==NULL){
-                $nilaiErr = "Nilai tidak boleh kosong";
-            }
-
-            if ($_POST['userGA']!=NULL && $_POST['tambah']!=NULL){
-                $userGA = $_POST['userGA'];
-                $nilai = ($_POST['tambah'] * $model->konverter) + $model->stok;
-                //$username = $_POST['username'];
-                Yii::$app->db->createCommand("UPDATE warehouse.data_warehouse SET stok=".$nilai." WHERE kode_barang = '".$model->kode_barang."' ")->execute();
-                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','-',current_timestamp, ".$_POST['tambah'].", 'input', '-', '".$userGA."') ")->execute();
-                //header("Refresh:0");
-                Yii::$app->session->setFlash('success', 'Input Barang Berhasil');
-                Yii::$app->response->redirect(['data-warehouse/view', 'id'=>$model->kode_barang]);
-                //header("Refresh:0");
-                //common\widgets\Alert::widget();
-
-            }
-
-        }
-    ?>
-
-    <?php $form = ActiveForm::begin(); ?>
-    
-    <br>
-    <h4><b>Input Barang</b></h4>
-
-    <div class="form">
-        <label for="userGA">Nama User GA :</label> 
-        <br>
-        <input type="text" min='0' name='userGA'/>
-        <span class="error">* <?php echo $userGAErr;?></span>
-        <br>
-        <label for="tambah">Jumlah :</label> 
-        <br>
-        <input type="number" min='0' name='tambah'/>
-        <span class="error">* <?php echo $nilaiErr ;?><?php echo "(satuan : " . $model->satuan_pembelian.")"; ?></span>
-        <br><br>
-        <input type="submit" value='Submit' formmethod='post'>        
-    </div>
-
-    <?php ActiveForm::end(); ?>
-    
 </div>

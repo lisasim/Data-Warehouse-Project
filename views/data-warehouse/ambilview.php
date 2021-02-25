@@ -4,7 +4,10 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
-
+use kartik\select2\Select2;
+use kartik\dialog\Dialog;
+use yii\helpers\ArrayHelper;
+use app\models\DataWarehouse;
 /* @var $this yii\web\View */
 /* @var $model app\models\DataWarehouse */
 
@@ -47,78 +50,31 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <html>
-    <head>
-    <style>
-        .error {color: #FF0000;}
-    </style>
-    </head>
-    <body>  
+</div>
 
-    <?php
-        $nilai = 0;
-        $username = $usernameErr = "";
-        $userGA = $departemen = $userGAErr = $nilaiErr = $departemenErr = "";
+<div class="data-warehouse-form">
 
-        if (isset($_POST["userGA"])||isset($_POST["ambil"])||isset($_POST["username"])||isset($_POST["departemen"])){
+<?php $form = ActiveForm::begin(); ?>
 
-            if ($_POST['userGA']==NULL){
-                $userGAErr = "Nama user GA tidak boleh kosong";
-            }
+<?= $form->field($model_log, 'user_ga')->textInput() ?>
+<?= $form->field($model_log, 'jumlah')->textInput()->label("Jumlah yang akan dikeluarkan dari stok")->hint('Isi dengan jumlah dalam satuan pengeluaran') ?>
+<?= $form->field($model_log, 'departemen')->textInput()->label("Departemen tujuan") ?>
 
-            /*
+<?php 
+    echo $form->field($model_log, 'satuan')->widget(Select2::classname(), [
+        'data' => array_merge(['pcs'=>'pcs'],ArrayHelper::map(DataWarehouse::find()->where("kode_barang = '".$model->kode_barang."' and satuan_pengeluaran not ilike '%pcs%' ")->all()
+        ,'satuan_pengeluaran','satuan_pengeluaran')),
+        'options' => ['placeholder' => 'Pilih Satuan'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+?>
 
-            if ($_POST['username']==NULL){
-                $usernameErr = "Nama user tidak boleh kosong";
-            }
-            */
+<div class="form-group">
+    <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+</div>
 
-            if ($_POST['departemen']==NULL){
-                $departemenErr = "Departemen tidak boleh kosong";
-            }
+<?php ActiveForm::end(); ?>
 
-            if ($_POST['ambil']==NULL){
-                $nilaiErr = "Nilai tidak boleh kosong ";
-            }
-
-            if ($_POST['userGA']!=NULL && $_POST['ambil']!=NULL && $_POST['departemen']!=NULL){
-                $userGA = $_POST['userGA'];
-                $nilai = $model->stok - $_POST['ambil'];
-                //$username = $_POST['username'];
-                $departemen = $_POST['departemen'];
-                Yii::$app->db->createCommand("UPDATE warehouse.data_warehouse SET stok=".$nilai." WHERE kode_barang = '".$model->kode_barang."' ")->execute();
-                Yii::$app->db->createCommand("INSERT INTO Warehouse.log_history (kode_barang, username , waktu , jumlah , aktivitas, departemen, user_ga) VALUES ('".$model->kode_barang."','-',current_timestamp, ".$_POST['ambil'].", 'ambil', '".$departemen."', '".$userGA."') ")->execute();
-                //header("Refresh:0");
-                Yii::$app->session->setFlash('success', 'Ambil Barang Berhasil');
-                Yii::$app->response->redirect(['data-warehouse/ambilview', 'id'=>$model->kode_barang]);
-            } 
-        }
-    ?>
-
-    <?php $form = ActiveForm::begin(); ?>
-    
-    <br>
-    <h4><b>Ambil Barang</b></h4>
-
-    <div class="form">
-        <label for="userGA">Nama User GA :</label> 
-        <br>
-        <input type="text" name='userGA'/>
-        <span class="error">* <?php echo $userGAErr;?></span>
-        <br>
-        <label for="departemen">Departemen :</label> 
-        <br>
-        <input type="text" name='departemen'/>
-        <span class="error">* <?php echo $departemenErr;?></span>
-        <br>
-        <label for="userGA">Jumlah :</label> 
-        <br>
-        <input type="number" min='0' name='ambil'/>
-        <span class="error">* <?php echo $nilaiErr;?><?php echo "(satuan : " . $model->satuan_pengeluaran.")"; ?></span>
-        <br><br>
-        <input type="submit" value='Submit' formmethod='post'>        
-    </div>
-
-    <?php ActiveForm::end(); ?>
-    
 </div>

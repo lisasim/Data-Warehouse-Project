@@ -43,7 +43,7 @@ $urlVendor ='index.php?r=data-vendor/create';
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Actions',
-                'headerOptions' => ['style' => 'color:#337ab7'],
+                'headerOptions' => ['style' => 'width:50px;color:#337ab7'],
                 'template' => '{input}{ambil}{update}',
                 'contentOptions' => ['class' => 'text-center'],
                 'buttons' => [

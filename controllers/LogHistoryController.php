@@ -14,6 +14,13 @@ use yii\filters\VerbFilter;
  */
 class LogHistoryController extends Controller
 {
+    // public function beforeAction($action)
+    // {        
+    //     if ( Yii::$app->user->isGuest ){
+    //         return $this->redirect(['site/login']);
+    //     }
+
+    // }
     /**
      * {@inheritdoc}
      */
@@ -37,6 +44,7 @@ class LogHistoryController extends Controller
     {
         $searchModel = new LogHistorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->orderBy(['waktu'=>SORT_DESC]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

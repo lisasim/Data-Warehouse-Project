@@ -12,6 +12,7 @@ use Yii;
  * @property string $waktu
  * @property int|null $jumlah
  * @property int $id
+ * @property str $satuan
  * @property string|null $aktivitas
  *
  * @property DataWarehouse $kodeBarang
@@ -32,12 +33,12 @@ class LogHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['kode_barang', 'username', 'waktu', 'id', 'user_ga'], 'required'],
-            [['kode_barang', 'username', 'aktivitas', 'user_ga', 'departemen'], 'string'],
+            [['kode_barang', 'waktu', 'user_ga','jumlah'], 'required'],
+            [['kode_barang', 'nama_item','username', 'aktivitas', 'user_ga', 'departemen','satuan'], 'string'],
             [['waktu'], 'safe'],
-            [['jumlah', 'id'], 'default', 'value' => null],
+            // [['jumlah'], 'default', 'value' => null],
             [['jumlah', 'id'], 'integer'],
-            [['id'], 'unique'],
+            // [['id'], 'unique'],
             [['kode_barang'], 'exist', 'skipOnError' => true, 'targetClass' => DataWarehouse::className(), 'targetAttribute' => ['kode_barang' => 'kode_barang']],
         ];
     }
@@ -49,10 +50,12 @@ class LogHistory extends \yii\db\ActiveRecord
     {
         return [
             'kode_barang' => 'Kode Barang',
+            'nama_item' => 'Nama Item',
             'username' => 'Username',
             'waktu' => 'Waktu',
             'jumlah' => 'Jumlah',
             'id' => 'ID',
+            'satuan' => 'Satuan',
             'aktivitas' => 'Aktivitas',
             'departemen' => 'Departemen',
             'user_ga' => 'Nama User GA',

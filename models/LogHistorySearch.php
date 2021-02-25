@@ -17,7 +17,7 @@ class LogHistorySearch extends LogHistory
     public function rules()
     {
         return [
-            [['kode_barang', 'username', 'waktu', 'aktivitas', 'departemen', 'user_ga'], 'safe'],
+            [['kode_barang', 'nama_item','username', 'waktu', 'aktivitas', 'departemen', 'user_ga'], 'safe'],
             [['jumlah', 'id'], 'integer'],
         ];
     }
@@ -64,6 +64,8 @@ class LogHistorySearch extends LogHistory
         ]);
 
         $query->andFilterWhere(['ilike', 'kode_barang', $this->kode_barang])
+            ->andFilterWhere(['ilike', 'satuan', $this->satuan])
+            ->andFilterWhere(['ilike', 'nama_item', $this->nama_item])
             ->andFilterWhere(['ilike', 'username', $this->username])
             ->andFilterWhere(['ilike', 'aktivitas', $this->aktivitas])
             ->andFilterWhere(['ilike', 'departemen', $this->departemen])

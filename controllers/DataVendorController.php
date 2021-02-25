@@ -14,6 +14,13 @@ use yii\filters\VerbFilter;
  */
 class DataVendorController extends Controller
 {
+    // public function beforeAction($action)
+    // {        
+    //     if ( Yii::$app->user->isGuest ){
+    //         return $this->redirect(['site/login']);
+    //     }
+
+    // }
     /**
      * {@inheritdoc}
      */

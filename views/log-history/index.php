@@ -22,13 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
+            // 'id',
             'kode_barang',
+            'nama_item',
             'user_ga',
             //'username',
             'departemen',
             'waktu',
             'jumlah',
-            //'id',
+            'satuan',
             'aktivitas',
         ],
     ]); ?>

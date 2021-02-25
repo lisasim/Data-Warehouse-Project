@@ -39,9 +39,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             //['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Data Warehouse', 'url' => ['/data-warehouse/index']],
-            ['label' => 'Log History', 'url' => ['/log-history/index']],
-            ['label' => 'Data Vendor', 'url' => ['/data-vendor/index']],
+            ['label' => 'Data Warehouse', 'url' => ['/data-warehouse/index'], 'visible'=>!Yii::$app->user->isGuest],
+            ['label' => 'Log History', 'url' => ['/log-history/index'],'visible'=>!Yii::$app->user->isGuest],
+            ['label' => 'Data Vendor', 'url' => ['/data-vendor/index'],'visible'=>!Yii::$app->user->isGuest],
             //['label' => 'About', 'url' => ['/site/about']],
             //['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (

@@ -22,13 +22,15 @@ class ComposerAutoloaderInit86f2a5aa7a57b7eefc26841a1e210e03
             return self::$loader;
         }
 
+        require __DIR__ . '/platform_check.php';
+
         spl_autoload_register(array('ComposerAutoloaderInit86f2a5aa7a57b7eefc26841a1e210e03', 'loadClassLoader'), true, true);
         self::$loader = $loader = new \Composer\Autoload\ClassLoader();
         spl_autoload_unregister(array('ComposerAutoloaderInit86f2a5aa7a57b7eefc26841a1e210e03', 'loadClassLoader'));
 
         $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION') && (!function_exists('zend_loader_file_encoded') || !zend_loader_file_encoded());
         if ($useStaticLoader) {
-            require_once __DIR__ . '/autoload_static.php';
+            require __DIR__ . '/autoload_static.php';
 
             call_user_func(\Composer\Autoload\ComposerStaticInit86f2a5aa7a57b7eefc26841a1e210e03::getInitializer($loader));
         } else {

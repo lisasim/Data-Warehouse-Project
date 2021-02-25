@@ -26,7 +26,7 @@ class DataWarehouse extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'warehouse.data_warehouse';
+        return 'data_warehouse';
     }
 
     /**
